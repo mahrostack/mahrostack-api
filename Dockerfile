@@ -26,8 +26,6 @@ RUN --mount=type=cache,target=/root/.npm \
 
 COPY tsconfig.json ./
 COPY src ./src
-COPY tools ./tools
-COPY scripts/copy-printable-templates.mjs ./scripts/
 RUN npm run build
 RUN npm prune --omit=dev
 
