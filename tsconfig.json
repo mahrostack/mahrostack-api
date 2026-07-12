@@ -8,7 +8,7 @@
     // See also https://aka.ms/tsconfig/module
     "module": "commonjs",
     "target": "esnext",
-    // "types": [],
+    "types": ["vitest/globals"],
     // For nodejs:
     // "lib": ["esnext"],
     // "types": ["node"],
@@ -35,6 +35,26 @@
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    // supoort aliases
+    "paths": {
+      "@/*": ["./src/*"],
+      "@config/*": ["./src/config/*"],
+      "@modules/*": ["./src/modules/*"],
+      "@core/*": ["./src/core/*"],
+       
+    }
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.d.ts"],
+
+  "exclude": ["node_modules", "dist", "prisma.config.ts", "prisma", "helpers", "tests"],
+
+  "ts-node": {
+    "compilerOptions": {
+      "module": "commonjs"
+    },
+    "files": true,
+    "require": ["tsconfig-paths/register"]
   }
 }
