@@ -21,11 +21,14 @@ ENV npm_config_fetch_retries=5 \
 FROM base AS build
 COPY package*.json ./
 COPY prisma ./prisma
+COPY prisma.config.ts ./
 RUN --mount=type=cache,target=/root/.npm \
     npm install
 
 COPY tsconfig.json ./
 COPY src ./src
+# prisma generate needs a URL in prisma.config.ts; placeholder is enough at build time
+ENV DATABASE_URL="postgresql://build:build@127.0.0.1:5432/build"
 RUN npm run build
 RUN npm prune --omit=dev
 
@@ -38,6 +41,7 @@ COPY --from=build /app/node_modules ./node_modules
 COPY --from=build /app/dist ./dist
 # COPY --from=build /app/openapi.json ./openapi.json
 COPY --from=build /app/prisma ./prisma
+COPY --from=build /app/prisma.config.ts ./prisma.config.ts
 
 COPY scripts/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 

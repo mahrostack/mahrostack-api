@@ -13,7 +13,7 @@
     "test:watch": "vitest",
     "test:integration": "vitest run --config vitest.integration.config.ts",
     "dev": "nodemon --exec ts-node src/server.ts",
-    "build": "tsc && tsc-alias",
+    "build": "prisma generate && tsc && tsc-alias",
     "start": "node dist/server.js",
     "start:build": "npm run build && node dist/server.js",
     "start:clean": "node scripts/start-clean.js",
